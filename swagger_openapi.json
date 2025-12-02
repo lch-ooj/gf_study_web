@@ -1,0 +1,1084 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "gf-ooj-user API (for Apipost)",
+        "version": "1.0.0",
+        "description": "OpenAPI 3.0 spec generated from project API definitions. Base URL: http://localhost:8000"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "tags": [
+        {
+            "name": "UserService",
+            "description": "用户服务"
+        },
+        {
+            "name": "Order",
+            "description": "订单管理"
+        },
+        {
+            "name": "Merchant",
+            "description": "商户管理"
+        },
+        {
+            "name": "Customer",
+            "description": "外卖用户管理"
+        }
+    ],
+    "paths": {
+        "/user/sign-up": {
+            "post": {
+                "tags": [
+                    "UserService"
+                ],
+                "summary": "Sign up a new user account",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignUpReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/sign-in": {
+            "post": {
+                "tags": [
+                    "UserService"
+                ],
+                "summary": "Sign in with exist account",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignInReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/sign-out": {
+            "post": {
+                "tags": [
+                    "UserService"
+                ],
+                "summary": "Sign out current user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/profile": {
+            "get": {
+                "tags": [
+                    "UserService"
+                ],
+                "summary": "Get the profile of current user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/check-nick-name": {
+            "post": {
+                "tags": [
+                    "UserService"
+                ],
+                "summary": "Check nickname available",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CheckNickNameReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/check-passport": {
+            "post": {
+                "tags": [
+                    "UserService"
+                ],
+                "summary": "Check passport available",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CheckPassportReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/is-signed-in": {
+            "post": {
+                "tags": [
+                    "UserService"
+                ],
+                "summary": "Check current user is already signed-in",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithSignedIn"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order/list": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "获取订单列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order/create": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "创建订单",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderCreateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithOrderId"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order/update": {
+            "put": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "更新订单状态",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderUpdateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithSuccess"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order/delete": {
+            "delete": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "删除订单",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderDeleteReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithSuccess"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order/get": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "获取订单详情",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "orderId",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderGetRes"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/merchant/list": {
+            "get": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "获取商户列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/merchant/create": {
+            "post": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "创建商户",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MerchantCreateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithMerchantId"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/merchant/update": {
+            "put": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "更新商户",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MerchantUpdateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithSuccess"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/merchant/delete": {
+            "delete": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "删除商户",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MerchantDeleteReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithSuccess"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/merchant/get": {
+            "get": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "获取商户详情",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "merchantId",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MerchantGetRes"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/list": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "获取外卖用户列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/create": {
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "创建外卖用户",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerCreateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithUid"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/update": {
+            "put": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "更新外卖用户",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerUpdateReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithSuccess"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/delete": {
+            "delete": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "删除外卖用户",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerDeleteReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithSuccess"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/get": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "获取外卖用户详情",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "uid",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerGetRes"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ApiResp": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            },
+            "ApiRespWithUser": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiResp"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "description": "user object"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ApiRespWithSignedIn": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiResp"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "ok": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ApiRespWithList": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiResp"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "list": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ApiRespWithOrderId": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiResp"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "orderId": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ApiRespWithMerchantId": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiResp"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "merchantId": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ApiRespWithUid": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiResp"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "uid": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ApiRespWithSuccess": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiResp"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "success": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SignUpReq": {
+                "type": "object",
+                "properties": {
+                    "passport": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "password2": {
+                        "type": "string"
+                    },
+                    "nickname": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "passport",
+                    "password",
+                    "password2"
+                ]
+            },
+            "SignInReq": {
+                "type": "object",
+                "properties": {
+                    "passport": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "passport",
+                    "password"
+                ]
+            },
+            "CheckNickNameReq": {
+                "type": "object",
+                "properties": {
+                    "nickname": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "nickname"
+                ]
+            },
+            "CheckPassportReq": {
+                "type": "object",
+                "properties": {
+                    "passport": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "passport"
+                ]
+            },
+            "OrderCreateReq": {
+                "type": "object",
+                "properties": {
+                    "uid": {
+                        "type": "integer"
+                    },
+                    "merchantId": {
+                        "type": "integer"
+                    },
+                    "deliveryAddress": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "uid",
+                    "merchantId",
+                    "deliveryAddress"
+                ]
+            },
+            "OrderUpdateReq": {
+                "type": "object",
+                "properties": {
+                    "orderId": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "orderId",
+                    "status"
+                ]
+            },
+            "OrderDeleteReq": {
+                "type": "object",
+                "properties": {
+                    "orderId": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "orderId"
+                ]
+            },
+            "OrderGetRes": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "orderId": {
+                                "type": "integer"
+                            },
+                            "uid": {
+                                "type": "integer"
+                            },
+                            "merchantId": {
+                                "type": "integer"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "orderTime": {
+                                "type": "string"
+                            },
+                            "deliveryAddress": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "MerchantCreateReq": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "contact": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            },
+            "MerchantUpdateReq": {
+                "type": "object",
+                "properties": {
+                    "merchantId": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "contact": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "merchantId"
+                ]
+            },
+            "MerchantDeleteReq": {
+                "type": "object",
+                "properties": {
+                    "merchantId": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "merchantId"
+                ]
+            },
+            "MerchantGetRes": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "merchantId": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "contact": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "CustomerCreateReq": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "password"
+                ]
+            },
+            "CustomerUpdateReq": {
+                "type": "object",
+                "properties": {
+                    "uid": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "uid"
+                ]
+            },
+            "CustomerDeleteReq": {
+                "type": "object",
+                "properties": {
+                    "uid": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "uid"
+                ]
+            },
+            "CustomerGetRes": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "uid": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "phone": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

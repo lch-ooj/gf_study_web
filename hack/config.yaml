@@ -1,0 +1,9 @@
+gfcli:
+  gen:
+    dao:
+      - link: "mysql:root:123456@tcp(127.0.0.1:3306)/gf_study"
+        tables: "user,merchant,order"
+        removePrefix: ""
+        descriptionTag: true
+        noModelComment: false
+        jsonCase: "CamelLower"
