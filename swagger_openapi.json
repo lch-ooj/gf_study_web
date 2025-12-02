@@ -539,6 +539,36 @@
                 }
             }
         },
+        "/customer/sign-in": {
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "外卖用户登录",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerSignInReq"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiRespWithUid"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/customer/update": {
             "put": {
                 "tags": [
@@ -1013,6 +1043,23 @@
                     },
                     "address": {
                         "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "password"
+                ]
+            },
+            "CustomerSignInReq": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "用户名"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "密码"
                     }
                 },
                 "required": [
