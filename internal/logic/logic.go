@@ -6,6 +6,7 @@ package logic
 
 import (
 	_ "gf-demo-user/internal/logic/bizctx"
+	_ "gf-demo-user/internal/logic/jwt"
 	_ "gf-demo-user/internal/logic/middleware"
 	_ "gf-demo-user/internal/logic/session"
 	_ "gf-demo-user/internal/logic/user"

@@ -1,5 +1,8 @@
 package consts
 
 const (
-	UserSessionKey = "UserSessionKey"
+	UserSessionKey       = "UserSessionKey"
+	EmailPurposeRegister = "register"
+	EmailPurposeLogin    = "login"
+	EmailPurposeReset    = "reset"
 )

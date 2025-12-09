@@ -21,3 +21,18 @@ database:
   default:
     link: "mysql:root:123456@tcp(127.0.0.1:3306)/gf_study"
     debug: true
+
+# Email SMTP settings for sending verification/reset codes
+email:
+  from: "Demo <noreply@example.com>"
+  smtp:
+    host: "smtp.example.com"
+    port: 587
+    username: "noreply@example.com"
+    password: "your_smtp_password"
+  codeExpireMinutes: 10
+
+# JWT settings
+jwt:
+  secret: "change-me-to-a-long-random-secret"
+  expireHours: 24

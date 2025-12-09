@@ -1,0 +1,85 @@
+### 邮箱发送验证码
+POST http://localhost:8000/user/email/send-code
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "purpose": "register"
+}
+
+### 邮箱注册并获取 JWT
+POST http://localhost:8000/user/email/sign-up
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Passw0rd!",
+  "nickname": "tester",
+  "code": "1234"
+}
+
+### 邮箱验证码登录
+POST http://localhost:8000/user/email/sign-in
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "code": "1234"
+}
+
+### 邮箱验证码重置密码
+POST http://localhost:8000/user/email/reset-password
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "code": "1234",
+  "newPassword": "NewPassw0rd!"
+}
+
+### 密码登录（passport 可用邮箱）
+POST http://localhost:8000/user/sign-in
+Content-Type: application/json
+
+{
+  "passport": "test@example.com",
+  "password": "Passw0rd!"
+}
+
+### 获取个人资料（需要 Bearer Token）
+GET http://localhost:8000/user/profile
+Authorization: Bearer {{token}}
+
+### 物品列表
+GET http://localhost:8000/items
+
+### 创建物品
+POST http://localhost:8000/items
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Pen",
+  "price": 9.9,
+  "stock": 100,
+  "description": "Blue pen"
+}
+
+### 获取物品详情
+GET http://localhost:8000/items/1
+
+### 更新物品
+PUT http://localhost:8000/items/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Pen Pro",
+  "price": 12.5,
+  "stock": 90,
+  "description": "Updated"
+}
+
+### 删除物品
+DELETE http://localhost:8000/items/1
+Authorization: Bearer {{token}}

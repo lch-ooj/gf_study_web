@@ -8,5 +8,8 @@ type SignUpReq struct {
 	Password  string `v:"required|length:6,16"`
 	Password2 string `v:"required|length:6,16|same:Password"`
 	Nickname  string
+	Email     string `json:"email" v:"email|optional"`
 }
-type SignUpRes struct{}
+type SignUpRes struct {
+	Token string `json:"token"`
+}

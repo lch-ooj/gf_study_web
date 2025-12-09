@@ -1,17 +1,18 @@
 package do
 
 import (
-    "github.com/gogf/gf/v2/frame/g"
-    "github.com/gogf/gf/v2/os/gtime"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
 // User is the golang structure of table user for DAO operations like Where/Data.
 type User struct {
-    g.Meta    `orm:"table:user, do:true"`
-    Id        interface{} // User ID
-    Passport  interface{} // User Passport
-    Password  interface{} // User Password
-    Nickname  interface{} // User Nickname
-    CreatedAt *gtime.Time // Created Time
-    UpdatedAt *gtime.Time // Updated Time
+	g.Meta    `orm:"table:user, do:true"`
+	Id        interface{} // User ID
+	Passport  interface{} // User Passport
+	Password  interface{} // User Password
+	Nickname  interface{} // User Nickname
+	Email     interface{} // User Email
+	CreatedAt *gtime.Time // Created Time
+	UpdatedAt *gtime.Time // Updated Time
 }

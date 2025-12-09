@@ -5,6 +5,8 @@ go 1.23.0
 require (
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.9.5
 	github.com/gogf/gf/v2 v2.9.5
+	github.com/golang-jwt/jwt/v5 v5.2.2
+	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 )
 
 require (

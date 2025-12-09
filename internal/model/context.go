@@ -13,4 +13,5 @@ type ContextUser struct {
 	Id       uint   // User ID.
 	Passport string // User passport.
 	Nickname string // User nickname.
+	Email    string // User email.
 }

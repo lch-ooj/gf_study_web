@@ -12,12 +12,17 @@ import (
 )
 
 type IUser interface {
-	Create(ctx context.Context, in model.UserCreateInput) (err error)
+	Create(ctx context.Context, in model.UserCreateInput) (user *entity.User, err error)
 	IsSignedIn(ctx context.Context) bool
-	SignIn(ctx context.Context, in model.UserSignInInput) (err error)
+	SignIn(ctx context.Context, in model.UserSignInInput) (out *model.AuthOutput, err error)
+	SignInWithEmailCode(ctx context.Context, in model.UserEmailSignInInput) (out *model.AuthOutput, err error)
+	SignUpWithEmailCode(ctx context.Context, in model.UserEmailSignUpInput) (out *model.AuthOutput, err error)
+	SendEmailCode(ctx context.Context, in model.EmailCodeInput) (err error)
+	ResetPassword(ctx context.Context, in model.UserResetPasswordInput) (out *model.AuthOutput, err error)
 	SignOut(ctx context.Context) error
 	IsPassportAvailable(ctx context.Context, passport string) (bool, error)
 	IsNicknameAvailable(ctx context.Context, nickname string) (bool, error)
+	IsEmailAvailable(ctx context.Context, email string) (bool, error)
 	GetProfile(ctx context.Context) *entity.User
 }
 

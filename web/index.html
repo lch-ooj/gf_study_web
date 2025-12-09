@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>实验三前后端演示</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f7f9fb;
+            color: #1f2933;
+        }
+
+        header {
+            background: linear-gradient(120deg, #0ea5e9, #2563eb);
+            color: #fff;
+            padding: 24px 32px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        main {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        section {
+            background: #fff;
+            border: 1px solid #e3e8ef;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        section h2 {
+            margin: 0 0 12px;
+            font-size: 18px;
+        }
+
+        label {
+            display: block;
+            margin: 6px 0 2px;
+            font-size: 13px;
+        }
+
+        input,
+        button,
+        select,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        button {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .row>* {
+            flex: 1;
+        }
+
+        pre {
+            background: #0b1021;
+            color: #c5d5ff;
+            padding: 12px;
+            border-radius: 8px;
+            overflow: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>实验三演示：邮箱注册/登录 + JWT + 物品 REST</h1>
+    </header>
+    <main>
+        <section>
+            <h2>发送邮箱验证码</h2>
+            <label>邮箱</label>
+            <input id="code-email" placeholder="email@example.com" />
+            <label>用途</label>
+            <select id="code-purpose">
+                <option value="register">register</option>
+                <option value="login">login</option>
+                <option value="reset">reset</option>
+            </select>
+            <button onclick="sendCode()">发送验证码</button>
+        </section>
+
+        <section>
+            <h2>邮箱注册</h2>
+            <label>邮箱</label>
+            <input id="signup-email" />
+            <label>密码</label>
+            <input id="signup-pass" type="password" />
+            <label>昵称</label>
+            <input id="signup-nick" />
+            <label>验证码</label>
+            <input id="signup-code" />
+            <button onclick="emailSignUp()">注册并登录</button>
+        </section>
+
+        <section>
+            <h2>邮箱登录</h2>
+            <label>邮箱</label>
+            <input id="login-email" />
+            <label>验证码</label>
+            <input id="login-code" />
+            <button onclick="emailSignIn()">验证码登录</button>
+            <h2 style="margin-top:16px">密码登录</h2>
+            <label>Passport（可用邮箱）</label>
+            <input id="pwd-passport" />
+            <label>密码</label>
+            <input id="pwd-password" type="password" />
+            <button onclick="passwordLogin()">密码登录</button>
+        </section>
+
+        <section>
+            <h2>重置密码</h2>
+            <label>邮箱</label>
+            <input id="reset-email" />
+            <label>验证码</label>
+            <input id="reset-code" />
+            <label>新密码</label>
+            <input id="reset-pass" type="password" />
+            <button onclick="resetPassword()">重置密码并登录</button>
+        </section>
+
+        <section>
+            <h2>物品管理</h2>
+            <div class="row">
+                <input id="item-name" placeholder="名称" />
+                <input id="item-price" placeholder="价格" />
+            </div>
+            <div class="row">
+                <input id="item-stock" placeholder="库存" />
+                <input id="item-id" placeholder="ID用于查/改/删" />
+            </div>
+            <textarea id="item-desc" placeholder="描述"></textarea>
+            <button onclick="itemCreate()">创建</button>
+            <div class="row">
+                <button onclick="itemList()">列表</button>
+                <button onclick="itemGet()">获取</button>
+                <button onclick="itemUpdate()">更新</button>
+                <button onclick="itemDelete()">删除</button>
+            </div>
+        </section>
+
+        <section>
+            <h2>结果输出</h2>
+            <pre id="output">点击按钮后显示结果...</pre>
+        </section>
+    </main>
+    <script>
+        const api = {
+            sendCode: "/user/email/send-code",
+            emailSignUp: "/user/email/sign-up",
+            emailSignIn: "/user/email/sign-in",
+            resetPassword: "/user/email/reset-password",
+            pwdSignIn: "/user/sign-in",
+            item: "/items",
+        };
+
+        function show(data) {
+            document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+            if (data && data.data && data.data.token) {
+                localStorage.setItem("token", data.data.token);
+            }
+        }
+
+        function authHeaders() {
+            const token = localStorage.getItem("token");
+            return token ? { Authorization: "Bearer " + token } : {};
+        }
+
+        async function post(url, body) {
+            const res = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", ...authHeaders() },
+                body: JSON.stringify(body),
+            });
+            return res.json();
+        }
+
+        async function put(url, body) {
+            const res = await fetch(url, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json", ...authHeaders() },
+                body: JSON.stringify(body),
+            });
+            return res.json();
+        }
+
+        async function get(url) {
+            const res = await fetch(url, { headers: authHeaders() });
+            return res.json();
+        }
+
+        async function del(url) {
+            const res = await fetch(url, { method: "DELETE", headers: authHeaders() });
+            return res.json();
+        }
+
+        async function sendCode() {
+            const email = document.getElementById("code-email").value;
+            const purpose = document.getElementById("code-purpose").value;
+            show(await post(api.sendCode, { email, purpose }));
+        }
+
+        async function emailSignUp() {
+            const email = document.getElementById("signup-email").value;
+            const password = document.getElementById("signup-pass").value;
+            const nickname = document.getElementById("signup-nick").value;
+            const code = document.getElementById("signup-code").value;
+            show(await post(api.emailSignUp, { email, password, nickname, code }));
+        }
+
+        async function emailSignIn() {
+            const email = document.getElementById("login-email").value;
+            const code = document.getElementById("login-code").value;
+            show(await post(api.emailSignIn, { email, code }));
+        }
+
+        async function passwordLogin() {
+            const passport = document.getElementById("pwd-passport").value;
+            const password = document.getElementById("pwd-password").value;
+            show(await post(api.pwdSignIn, { passport, password }));
+        }
+
+        async function resetPassword() {
+            const email = document.getElementById("reset-email").value;
+            const code = document.getElementById("reset-code").value;
+            const newPassword = document.getElementById("reset-pass").value;
+            show(await post(api.resetPassword, { email, code, newPassword }));
+        }
+
+        async function itemCreate() {
+            const name = document.getElementById("item-name").value;
+            const price = parseFloat(document.getElementById("item-price").value || "0");
+            const stock = parseInt(document.getElementById("item-stock").value || "0");
+            const description = document.getElementById("item-desc").value;
+            show(await post(api.item, { name, price, stock, description }));
+        }
+
+        async function itemList() {
+            show(await get(api.item));
+        }
+
+        async function itemGet() {
+            const id = document.getElementById("item-id").value;
+            show(await get(`${api.item}/${id}`));
+        }
+
+        async function itemUpdate() {
+            const id = document.getElementById("item-id").value;
+            const name = document.getElementById("item-name").value;
+            const price = parseFloat(document.getElementById("item-price").value || "0");
+            const stock = parseInt(document.getElementById("item-stock").value || "0");
+            const description = document.getElementById("item-desc").value;
+            show(await put(`${api.item}/${id}`, { name, price, stock, description }));
+        }
+
+        async function itemDelete() {
+            const id = document.getElementById("item-id").value;
+            show(await del(`${api.item}/${id}`));
+        }
+    </script>
+</body>
+
+</html>

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gogf/gf/v2/net/ghttp"
 
@@ -32,6 +33,7 @@ func (s *sMiddleware) Ctx(r *ghttp.Request) {
 			Id:       user.Id,
 			Passport: user.Passport,
 			Nickname: user.Nickname,
+			Email:    user.Email,
 		}
 	}
 	// Continue execution of next middleware.
@@ -42,9 +44,18 @@ func (s *sMiddleware) Ctx(r *ghttp.Request) {
 func (s *sMiddleware) Auth(r *ghttp.Request) {
 	if service.User().IsSignedIn(r.Context()) {
 		r.Middleware.Next()
-	} else {
-		r.Response.WriteStatus(http.StatusForbidden)
+		return
 	}
+	authHeader := strings.TrimSpace(r.Header.Get("Authorization"))
+	if strings.HasPrefix(strings.ToLower(authHeader), "bearer ") {
+		token := strings.TrimSpace(authHeader[7:])
+		if ctxUser, err := service.JWT().Parse(r.Context(), token); err == nil && ctxUser != nil {
+			service.BizCtx().SetUser(r.Context(), ctxUser)
+			r.Middleware.Next()
+			return
+		}
+	}
+	r.Response.WriteStatus(http.StatusForbidden)
 }
 
 // CORS allows Cross-origin resource sharing.

@@ -7,4 +7,6 @@ type SignInReq struct {
 	Passport string `v:"required"`
 	Password string `v:"required"`
 }
-type SignInRes struct{}
+type SignInRes struct {
+	Token string `json:"token"`
+}
